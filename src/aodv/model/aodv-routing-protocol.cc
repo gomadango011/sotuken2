@@ -49,6 +49,10 @@
 #include <algorithm>
 #include <limits>
 
+#include "ns3/mobility-model.h"
+#include "ns3/mobility-helper.h"
+#include "ns3/vector.h"
+
 namespace ns3
 {
 
@@ -1055,6 +1059,13 @@ RoutingProtocol::SendRequest(Ipv4Address dst)
     {
         m_rreqCount++;
     }
+
+    //位置情報取得アルゴリズム
+    Ptr<MobilityModel> mobility = m_ipv4->GetObject<Node> ()->GetObject<MobilityModel>();
+    Vector pos = mobility->GetPosition ();
+
+    printf("X: %f,  Y: %f\n", pos.x, pos.y ) ;
+
     // Create RREQ header
     RreqHeader rreqHeader;
     rreqHeader.SetDst(dst);
